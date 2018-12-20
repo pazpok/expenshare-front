@@ -3,7 +3,11 @@ import {Table} from "reactstrap";
 import {NavLink, Route} from "react-router-dom";
 import Form from "./Form";
 import moment from "moment";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCar, faHotel, faUtensils, faRunning, faVideo, faWineBottle } from '@fortawesome/free-solid-svg-icons';
 
+library.add(faCar, faHotel, faUtensils, faRunning, faVideo, faWineBottle);
 
 class Expense extends Component {
     constructor(props) {
@@ -33,6 +37,7 @@ class Expense extends Component {
                     <td>{expense.amount}</td>
                     <td>{expense.title}</td>
                     <td>{expense.category.label}</td>
+                    <td><FontAwesomeIcon icon={expense.category.icon} /></td>
                     <td>{moment(expense.created_at).format("D/M/Y")}</td>
                 </tr>
                 </tbody>
@@ -42,8 +47,8 @@ class Expense extends Component {
         return (
             <React.Fragment>
                 <h1>Dépenses</h1>
-                <Route exact path={this.props.match.url + '/add'} component={Form}/>
                 <NavLink to={this.props.match.url + '/add'}>Ajouter une dépense</NavLink>
+                <Route path={this.props.match.url + '/add'} component={Form}/>
                 <Table hover>
                     <thead>
                     <tr>
@@ -52,6 +57,7 @@ class Expense extends Component {
                         <th>Dépense</th>
                         <th>Description</th>
                         <th>Catégorie</th>
+                        <th>Icone</th>
                         <th>Date</th>
                     </tr>
                     </thead>
