@@ -48,7 +48,7 @@ class Expense extends Component {
             <React.Fragment>
                 <h1>Dépenses</h1>
                 <NavLink to={this.props.match.url + '/add'}>Ajouter une dépense</NavLink>
-                <Route path={this.props.match.url + '/add'} component={Form}/>
+                <Route path={this.props.match.url + '/add'} render={props => <Form {...props} slug={this.props.slug}/>}/>
                 <Table hover>
                     <thead>
                     <tr>
