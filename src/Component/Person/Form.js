@@ -27,7 +27,7 @@ class PersonForm extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                this.props.callBack(JSON.parse(data));
                 alert('Nouvelle personne crée avec succès !');
             })
             .catch(err => alert('Erreur lors de la création de la personne'))

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table} from "reactstrap";
+import {Table, Button} from "reactstrap";
 import {NavLink, Route} from "react-router-dom";
 import Form from "./Form";
 import moment from "moment";
@@ -12,7 +12,24 @@ library.add(faCar, faHotel, faUtensils, faRunning, faVideo, faWineBottle);
 class Expense extends Component {
     constructor(props) {
         super(props);
-        this.state = {expense: []};
+        this.state = {expense: [], expenseid: ""};
+    }
+
+    handleDeleteExpense(e, id) {
+        e.preventDefault(e);
+        let expenses = this.state.expense;
+        expenses = expenses.filter(expense => expense.id !== id);
+        this.setState({ expense: expenses});
+
+        fetch('http://127.0.0.1/dcdev/CoursDC/Module4/expenshare/expenshare-back/public/expense/', {
+            method: 'DELETE',
+            body: JSON.stringify({ expense: id })
+        })
+            .then(response => response.json())
+            .then(data => id, alert('Dépense supprimée !'))
+            .catch(err => alert('Erreur lors de la suppression de la dépense'))
+        ;
+
     }
 
     componentDidMount() {
@@ -38,7 +55,9 @@ class Expense extends Component {
                     <td>{expense.title}</td>
                     <td>{expense.category.label}</td>
                     <td><FontAwesomeIcon icon={expense.category.icon} /></td>
-                    <td>{moment(expense.created_at).format("D/M/Y")}</td>
+                    <td>{moment(expense.createdAt).format("D/M/Y")}</td>
+                    <td><Button color="danger" onClick={e => this.handleDeleteExpense(e, expense.id)} >Supprimer</Button></td>
+
                 </tr>
                 </tbody>
             );
@@ -59,6 +78,7 @@ class Expense extends Component {
                         <th>Catégorie</th>
                         <th>Icone</th>
                         <th>Date</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     {expense}

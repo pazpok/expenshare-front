@@ -41,10 +41,7 @@ class ExpenseForm extends Component {
             body: JSON.stringify({ title: this.state.title, amount: this.state.amount, category: this.state.cat, createdat: this.state.createdat, person: this.state.pers })
         })
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                alert('Nouvelle dépense crée avec succès !');
-            })
+            .then(data => {console.log(data);alert('Nouvelle dépense crée avec succès !');})
             .catch(err => alert('Erreur lors de la création de la dépense'))
         ;
     }
